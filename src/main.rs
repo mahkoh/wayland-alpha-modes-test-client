@@ -187,10 +187,11 @@ fn main() {
                 let w = width.get();
                 let h = height.get();
                 xdg_surface.ack_configure(serial);
+                let cases = ss.len() as i32;
                 for (x, s) in ss.iter().enumerate() {
                     for (y, s) in s.iter().enumerate() {
-                        s.2.set_position((x as i32 * w) / 3, (y as i32 * h) / 2);
-                        s.1.set_destination(w / 3, h / 2);
+                        s.2.set_position((x as i32 * w) / cases, (y as i32 * h) / 2);
+                        s.1.set_destination(w / cases, h / 2);
                         s.0.commit();
                     }
                 }
