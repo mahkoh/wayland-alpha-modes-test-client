@@ -145,18 +145,20 @@ fn main() {
 
     let linear_to_gamma = |l: f64| l.powf(1.0 / 2.2);
 
-    let ss_pe = create_subsurface(
-        WpColorRepresentationSurfaceV1AlphaMode::PREMULTIPLIED_ELECTRICAL,
-        linear_to_gamma(red_linear) * alpha,
-    );
-    let ss_po = create_subsurface(
-        WpColorRepresentationSurfaceV1AlphaMode::PREMULTIPLIED_OPTICAL,
-        linear_to_gamma(red_linear * alpha),
-    );
-    let ss_s = create_subsurface(
-        WpColorRepresentationSurfaceV1AlphaMode::STRAIGHT,
-        linear_to_gamma(red_linear),
-    );
+    let ss = [
+        create_subsurface(
+            WpColorRepresentationSurfaceV1AlphaMode::PREMULTIPLIED_ELECTRICAL,
+            linear_to_gamma(red_linear) * alpha,
+        ),
+        create_subsurface(
+            WpColorRepresentationSurfaceV1AlphaMode::PREMULTIPLIED_OPTICAL,
+            linear_to_gamma(red_linear * alpha),
+        ),
+        create_subsurface(
+            WpColorRepresentationSurfaceV1AlphaMode::STRAIGHT,
+            linear_to_gamma(red_linear),
+        ),
+    ];
 
     let width = Cell::new(800);
     let height = Cell::new(600);
@@ -185,7 +187,7 @@ fn main() {
                 let w = width.get();
                 let h = height.get();
                 xdg_surface.ack_configure(serial);
-                for (x, s) in [&ss_pe, &ss_po, &ss_s].into_iter().enumerate() {
+                for (x, s) in ss.iter().enumerate() {
                     for (y, s) in s.iter().enumerate() {
                         s.2.set_position((x as i32 * w) / 3, (y as i32 * h) / 2);
                         s.1.set_destination(w / 3, h / 2);
