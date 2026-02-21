@@ -1,0 +1,13 @@
+[package]
+name = "wayland-alpha-mode-test-client"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+wl-client = "0.2.0"
+arrayvec = "0.7.6"
+uapi = "0.2.13"
+half = "2.7.1"
+
+[build-dependencies]
+wl-client-builder = "0.2.0"
